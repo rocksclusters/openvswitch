@@ -1,0 +1,9 @@
+PKGROOT		= /opt/openvswitch
+NAME        = openvswitch
+VERSION     = 2.3.1
+RELEASE 	= 1
+TARBALL_POSTFIX	= tar.gz
+OVS.RPMBUILD	= $(REDHAT.SOURCES)/..
+OVS.SOURCES 	= $(OVS.RPMBUILD)/SOURCES
+OVS.RPMS	= $(OVS.RPMSBUILD)/RPMS
+MAKE.iscontrib	= true

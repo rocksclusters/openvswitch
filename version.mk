@@ -1,0 +1,6 @@
+ROLLNAME	= openvswitch
+VERSION		= 2.3.1
+RELEASE		= 0
+COLOR		= azure
+
+REDHAT.ROOT	= $(CURDIR)
