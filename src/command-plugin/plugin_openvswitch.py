@@ -64,11 +64,15 @@ class Plugin(rocks.commands.Plugin):
 
 	def run(self, args):
 		""" """
-		# args is a dictionary with 'host' = hostname and net_id = net.id
-		# which is the primary keys of the interface table
+		# args is a dictionary with 'host' = hostname 
+		#                           net_id = net.id
+		#                               primary keys interface table
+		#                           text = outputText 
+		#				list of existing text 
 		
 		host = str(args['host'])
 		netid = int(args['net_id'])
+		outputText = args['text']
 		OVSBRIDGE = 'ovs-bridge'
 		OVSLINK	= 'ovs-link'
 
@@ -85,19 +89,25 @@ class Plugin(rocks.commands.Plugin):
 		subnet,sname,module,options = self.db.fetchone()
 
 		if module == OVSBRIDGE:
-			self.owner.addOutput(host, 'ONBOOT="yes"') 
-			self.owner.addOutput(host, 'TYPE="OVSBridge"') 
-			self.owner.addOutput(host, 'DEVICETYPE="ovs"') 
-			self.owner.addOutput(host, 'OVS_OPTIONS="%s"' % options )
-			self.owner.addOutput(host, 'NM_CONTROLLED="no"')
-			self.owner.addOutput(host, 'ROCKS_SUBNET="%s"' % sname)
+			outputText.insert(0,"##Configured by Rocks")
+			for l in outputText:
+				if l.find('ONBOOT') >= 0: outputText.remove(l)
+			outputText.append( 'ONBOOT=yes') 
+			outputText.append( 'TYPE="OVSBridge"') 
+			outputText.append( 'DEVICETYPE="ovs"') 
+			outputText.append( 'OVS_EXTRA="%s"' % options )
+			outputText.append( 'NM_CONTROLLED="no"')
+			outputText.append( 'ROCKS_SUBNET="%s"' % sname)
 		elif module == OVSLINK:
 			for (brsubid, brsubname, brname) in ovsbridges:
 				if brsubid == subnet:
-					self.owner.addOutput(host,'ONBOOT=yes')
-					self.owner.addOutput(host,'DEVICETYPE=ovs')
-					self.owner.addOutput(host,'TYPE=OVSPort')
-					self.owner.addOutput(host, 'OVS_BRIDGE=%s' % brname)
-					self.owner.addOutput(host, 'BOOTPROTO=none')
-					self.owner.addOutput(host, 'ROCKS_SUBNET="%s"' % sname)
+					outputText.insert(0,"##Configured by Rocks")
+					for l in outputText:
+						if l.find('ONBOOT') >= 0: outputText.remove(l)
+					outputText.append('ONBOOT=yes')
+					outputText.append('DEVICETYPE=ovs')
+					outputText.append('TYPE=OVSPort')
+					outputText.append('OVS_BRIDGE=%s' % brname)
+					outputText.append('BOOTPROTO=none')
+					outputText.append('ROCKS_SUBNET="%s"' % sname)
 
