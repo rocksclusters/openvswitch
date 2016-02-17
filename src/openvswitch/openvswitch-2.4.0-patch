@@ -1,0 +1,28 @@
+diff -r -C 5 openvswitch-2.4.0-dist/rhel/openvswitch.spec.in openvswitch-2.4.0/rhel/openvswitch.spec.in
+*** openvswitch-2.4.0-dist/rhel/openvswitch.spec.in	2016-01-06 11:44:45.000000000 -0800
+--- openvswitch-2.4.0/rhel/openvswitch.spec.in	2016-02-17 12:21:40.765933658 -0800
+***************
+*** 74,84 ****
+  install -d -m 755 $RPM_BUILD_ROOT/var/lib/openvswitch
+  
+  %check
+  %if %{with check}
+      if make check TESTSUITEFLAGS='%{_smp_mflags}' ||
+!        make check TESTSUITEFLAGS='--recheck'; then :;
+      else
+          cat tests/testsuite.log
+          exit 1
+      fi
+  %endif
+--- 74,84 ----
+  install -d -m 755 $RPM_BUILD_ROOT/var/lib/openvswitch
+  
+  %check
+  %if %{with check}
+      if make check TESTSUITEFLAGS='%{_smp_mflags}' ||
+!        make check TESTSUITEFLAGS=''; then :;
+      else
+          cat tests/testsuite.log
+          exit 1
+      fi
+  %endif

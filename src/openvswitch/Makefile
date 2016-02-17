@@ -65,9 +65,9 @@ rpm::	build
 
 build:
 	gunzip -c $(NAME)-$(VERSION).$(TARBALL_POSTFIX) | $(TAR) -xf -
-	cp $(NAME)-$(VERSION).$(TARBALL_POSTFIX) $(OVS.SOURCES) 
 	( 							\
 		cd $(NAME)-$(VERSION);				\
+		if [ -f ../$(PATCHFILE) ]; then patch -p1 < ../$(PATCHFILE); fi;\
 		./boot.sh;					\
 		./configure --with-linux=/lib/modules/`uname -r`/build;\
 		make dist;					\
@@ -76,7 +76,7 @@ build:
 		cp rhel/openvswitch-kmod-rhel6.spec $(OVS.SPECS);	\
 		cp rhel/openvswitch-kmod.files $(OVS.SOURCES); \
 	)
-	rpmbuild -bb --without check $(OVS.SPECS)/openvswitch.spec
+	rpmbuild -bb $(OVS.SPECS)/openvswitch.spec
 	rpmbuild -bb $(OVS.SPECS)/openvswitch-kmod-rhel6.spec
 	
 clean::
