@@ -68,10 +68,16 @@ build:
 	cp $(NAME)-$(VERSION).$(TARBALL_POSTFIX) $(OVS.SOURCES) 
 	( 							\
 		cd $(NAME)-$(VERSION);				\
-		rpmbuild -bb rhel/openvswitch.spec;		\
-		cp rhel/openvswitch-kmod.files ../$(OVS.SOURCES); \
-		rpmbuild -bb rhel/openvswitch-kmod-rhel6.spec;	\
+		./boot.sh;					\
+		./configure --with-linux=/lib/modules/`uname -r`/build;\
+		make dist;					\
+		cp $(NAME)-$(DISTVERSION).$(TARBALL_POSTFIX) $(OVS.SOURCES);		\
+		cp rhel/openvswitch.spec $(OVS.SPECS);		\
+		cp rhel/openvswitch-kmod-rhel6.spec $(OVS.SPECS);	\
+		cp rhel/openvswitch-kmod.files $(OVS.SOURCES); \
 	)
+	rpmbuild -bb --without check $(OVS.SPECS)/openvswitch.spec
+	rpmbuild -bb $(OVS.SPECS)/openvswitch-kmod-rhel6.spec
 	
 clean::
 	rm -rf $(NAME)-$(VERSION)
