@@ -15,7 +15,7 @@
 	</copyright>
 
 	<package>openvswitch</package>
-	<package>openvswitch-kmod</package>
+	<package>kmod-openvswitch</package>
 	<package>openvswitch-command-plugins</package>
 
 <post>
