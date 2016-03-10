@@ -20,5 +20,5 @@
 		<to>openvswitch</to>
 		<to>openvswitch-server</to>
 	</edge>
-	<edge from="base" to="openvswitch" cond="openvswitch" />
+	<edge from="client" to="openvswitch" cond="openvswitch" />
 </graph>
