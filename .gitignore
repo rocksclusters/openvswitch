@@ -1,0 +1,26 @@
+# build directory
+RPMS/
+SOURCES/
+BUILD/
+SPECS/
+disk*/
+*.iso
+
+_os
+_arch
+_distribution
+.rpmmacros
+bootstrap.py
+
+# ignore version, rules  files
+python.mk
+Rules-*.mk
+Rules.mk
+Rolls.mk
+roll*.mk
+rocks-*.mk
+roll-openvswitch.*
+
+# ignore src files
+src/openvswitch/*.tar.gz
+
