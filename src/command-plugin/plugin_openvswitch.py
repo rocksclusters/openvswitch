@@ -80,7 +80,7 @@ class Plugin(rocks.commands.Plugin):
 		self.owner.db.execute("""SELECT net.subnet,s.name,net.device FROM networks net, subnets s, nodes n WHERE
 			n.name = '%s' AND net.node = n.id AND net.subnet = s.id AND net.module = '%s'""" % (host, OVSBRIDGE))
 		ovsbridges = self.db.fetchall()
-		if ovsbridges is None:
+		if ovsbridges == []:
 			return	# there are no bridges
 
 		# find the subnet id, name, module  THIS interface
