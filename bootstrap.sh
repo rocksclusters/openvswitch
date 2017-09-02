@@ -68,4 +68,4 @@ https://github.com/rocksclusters-attic"
 fi
 
 . $ROLLSROOT/etc/bootstrap-functions.sh
-
+yum -y install selinux-policy-devel

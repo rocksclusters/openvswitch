@@ -1,5 +1,7 @@
 NAME			= openvswitch-command-plugins
 VERSION			= 1
 RELEASE			= 4
-RPM.FILESLIST		= pkg-files
 RPM.REQUIRES		= rocks-pylib
+PLUGIN 			= plugin_openvswitch.py
+PLUGINDIR		= $(PY.ROCKS)/rocks/commands/report/host/interface
+RPM.FILES		= $(PLUGINDIR)/* 

@@ -18,8 +18,11 @@
 	<package>kmod-openvswitch</package>
 	<package>openvswitch-command-plugins</package>
 
-<post>
+<post cond="rocks_version_major == 6" >
 /sbin/chkconfig openvswitch on
+</post>
+<post cond="rocks_version_major == 7" >
+/usr/bin/systemctl enable openvswitch 
 </post>
 
 </kickstart>

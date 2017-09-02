@@ -56,6 +56,7 @@
 # $Log$
 
 REDHAT.ROOT = $(CURDIR)/../../
+OVS_SPEC=
 
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
@@ -72,12 +73,11 @@ build:
 		./configure --with-linux=/lib/modules/`uname -r`/build;\
 		make dist;					\
 		cp $(NAME)-$(DISTVERSION).$(TARBALL_POSTFIX) $(OVS.SOURCES);		\
-		cp rhel/openvswitch.spec $(OVS.SPECS);		\
-		cp rhel/openvswitch-kmod-rhel6.spec $(OVS.SPECS);	\
-		cp rhel/openvswitch-kmod.files $(OVS.SOURCES); \
+		cp rhel/*.spec $(OVS.SPECS);		\
+		cp rhel/* $(OVS.SOURCES); \
 	)
 	rpmbuild -bb $(OVS.SPECS)/openvswitch.spec
-	rpmbuild -bb $(OVS.SPECS)/openvswitch-kmod-rhel6.spec
+	rpmbuild -bb $(OVS.SPECS)/openvswitch-kmod-fedora.spec
 	
 clean::
 	rm -rf $(NAME)-$(VERSION)

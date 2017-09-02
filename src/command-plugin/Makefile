@@ -60,8 +60,6 @@ REDHAT.ROOT = $(CURDIR)/../../
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 
-PLUGIN=plugin_openvswitch.py
-PLUGINDIR=$(PY.ROCKS)/rocks/commands/report/host/interface
 
 build:
 	echo Nothing to build	
@@ -69,7 +67,6 @@ build:
 install::
 	mkdir -p $(ROOT)/$(PLUGINDIR)
 	install $(PLUGIN) $(ROOT)/$(PLUGINDIR)
-	echo $(PLUGINDIR)/$(PLUGIN) > $(RPM.FILESLIST)
 	
 
 clean::
