@@ -56,29 +56,31 @@
 # $Log$
 
 REDHAT.ROOT = $(CURDIR)/../../
-OVS_SPEC=
 
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 
+.PHONY: RPMDESTS
 
 rpm::	build
 
-build:
+build: RPMDESTS
 	gunzip -c $(NAME)-$(VERSION).$(TARBALL_POSTFIX) | $(TAR) -xf -
 	( 							\
 		cd $(NAME)-$(VERSION);				\
 		if [ -f ../$(PATCHFILE) ]; then patch -p1 < ../$(PATCHFILE); fi;\
-		./boot.sh;					\
 		./configure --with-linux=/lib/modules/`uname -r`/build;\
-		make dist;					\
-		cp $(NAME)-$(DISTVERSION).$(TARBALL_POSTFIX) $(OVS.SOURCES);		\
-		cp rhel/*.spec $(OVS.SPECS);		\
-		cp rhel/* $(OVS.SOURCES); \
+		make rpm-fedora; \
+		make rpm-fedora-kmod; \
+		find rpm/rpmbuild/RPMS/noarch -name '*rpm' -exec mv {} $(REDHAT.ROOT)/RPMS/noarch \; ;\
+		find rpm/rpmbuild/RPMS/$(ARCH) -name '*rpm' -exec mv {} $(REDHAT.ROOT)/RPMS/$(ARCH) \; ;\
+		find rpm/rpmbuild/SRPMS/ -name '*rpm' -exec mv {} $(REDHAT.ROOT)/SRPMS \; ;\
 	)
-	rpmbuild -bb $(OVS.SPECS)/openvswitch.spec
-	rpmbuild -bb $(OVS.SPECS)/openvswitch-kmod-fedora.spec
 	
+RPMDESTS:
+	make -C $(REDHAT.ROOT) rpm-mkdirs
+	if [ ! -d $(REDHAT.RPMS)/noarch ]; then mkdir -p $(REDHAT.RPMS)/noarch; fi
+	if [ ! -d $(REDHAT.RPMS)/$(ARCH) ]; then mkdir -p $(REDHAT.RPMS)/$(ARCH); fi
 clean::
 	rm -rf $(NAME)-$(VERSION)
 	rm -rf rpmbuild
