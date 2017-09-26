@@ -68,4 +68,5 @@ https://github.com/rocksclusters-attic"
 fi
 
 . $ROLLSROOT/etc/bootstrap-functions.sh
-yum -y install selinux-policy-devel
+yum -y install selinux-policy-devel groff python-sphinx python-twisted-core python-zope-interface libcap-ng-devel
+

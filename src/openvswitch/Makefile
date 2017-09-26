@@ -56,6 +56,7 @@
 # $Log$
 
 REDHAT.ROOT = $(CURDIR)/../../
+ME=$(shell whoami)
 
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
@@ -65,7 +66,8 @@ include Rules.mk
 rpm::	build
 
 build: RPMDESTS
-	gunzip -c $(NAME)-$(VERSION).$(TARBALL_POSTFIX) | $(TAR) -xf -
+	gunzip -c $(NAME)-$(VERSION).$(TARBALL_POSTFIX) | $(TAR) -xf - 
+	chown -R $(ME) $(NAME)-$(VERSION)
 	( 							\
 		cd $(NAME)-$(VERSION);				\
 		if [ -f ../$(PATCHFILE) ]; then patch -p1 < ../$(PATCHFILE); fi;\

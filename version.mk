@@ -1,5 +1,5 @@
 ROLLNAME	= openvswitch
-VERSION		= 2.7.2
+VERSION		= 2.8.0
 RELEASE		= 0
 COLOR		= azure
 

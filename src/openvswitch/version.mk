@@ -1,6 +1,6 @@
 PKGROOT		= /opt/openvswitch
 NAME        = openvswitch
-VERSION     = 2.7.2
+VERSION     = 2.8.0
 PATCHFILE   = $(NAME)-$(VERSION)-patch
 DISTVERSION = $(VERSION)
 RELEASE 	= 1
