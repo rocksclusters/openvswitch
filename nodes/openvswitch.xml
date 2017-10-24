@@ -15,7 +15,6 @@
 	</copyright>
 
 	<package>openvswitch</package>
-	<package>kmod-openvswitch</package>
 	<package>openvswitch-command-plugins</package>
 
 <post cond="rocks_version_major == 6" >
