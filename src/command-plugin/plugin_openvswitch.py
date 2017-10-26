@@ -86,7 +86,11 @@ class Plugin(rocks.commands.Plugin):
 		# find the subnet id, name, module  THIS interface
 		self.owner.db.execute("""SELECT n.subnet,s.name,n.module,n.options FROM networks n, subnets s WHERE 
 			n.id = '%d' AND s.id = n.subnet""" % netid)
-		subnet,sname,module,options = self.db.fetchone()
+		try:
+			subnet,sname,module,options = self.db.fetchone()
+		except:
+			# interface does not need to be configured further
+			return
 
 		if module == OVSBRIDGE:
 			outputText.insert(0,"##Configured by Rocks")
