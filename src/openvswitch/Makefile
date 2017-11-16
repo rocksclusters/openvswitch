@@ -67,16 +67,16 @@ rpm::	build
 
 build: RPMDESTS
 	gunzip -c $(NAME)-$(VERSION).$(TARBALL_POSTFIX) | $(TAR) -xf - 
-	chown -R $(ME) $(NAME)-$(VERSION)
+	chown -R $(ME).$(ME) $(NAME)-$(VERSION)
 	( 							\
 		cd $(NAME)-$(VERSION);				\
 		if [ -f ../$(PATCHFILE) ]; then patch -p1 < ../$(PATCHFILE); fi;\
 		./configure --with-linux=/lib/modules/`uname -r`/build;\
 		make rpm-fedora; \
 		make rpm-fedora-kmod; \
-		find rpm/rpmbuild/RPMS/noarch -name '*rpm' -exec mv {} $(REDHAT.ROOT)/RPMS/noarch \; ;\
-		find rpm/rpmbuild/RPMS/$(ARCH) -name '*rpm' -exec mv {} $(REDHAT.ROOT)/RPMS/$(ARCH) \; ;\
-		find rpm/rpmbuild/SRPMS/ -name '*rpm' -exec mv {} $(REDHAT.ROOT)/SRPMS \; ;\
+		find rpm/rpmbuild/RPMS/noarch -name '*rpm' -exec /bin/cp {} $(REDHAT.ROOT)/RPMS/noarch \; ;\
+		find rpm/rpmbuild/RPMS/$(ARCH) -name '*rpm' -exec /bin/cp  {} $(REDHAT.ROOT)/RPMS/$(ARCH) \; ;\
+		find rpm/rpmbuild/SRPMS/ -name '*rpm' -exec /bin/cp {} $(REDHAT.ROOT)/SRPMS \; ;\
 	)
 	
 RPMDESTS:
